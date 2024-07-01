@@ -1,0 +1,23 @@
+﻿<Window x:Class="PasswordNoteBook.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PasswordNoteBook"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="550" Width="450">
+    <Grid>
+        <TextBlock HorizontalAlignment="Center" Margin="0,245,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" FontSize="20" Name="PasswordTxt"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,277,0,0" TextWrapping="Wrap" Text="Enter Password" VerticalAlignment="Top" Width="150" Name="tbxPasswordText" FontSize="20"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,150,0,0" TextWrapping="Wrap" Text="Service" VerticalAlignment="Top" FontSize="20" Name="ServiceTxt"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,182,0,0" TextWrapping="Wrap" Text="ServiceName" VerticalAlignment="Top" Width="150" FontSize="20" Name="tbxServiceName"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,46,0,0" TextWrapping="Wrap" Text="Wanted Service" VerticalAlignment="Top" FontSize="20" Name="WantedServiceTxt"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,71,0,0" TextWrapping="Wrap" Text="Search Service" VerticalAlignment="Top" Width="150" FontSize="20" Name="tbxServiceSearch"/>
+        <Button Content="Search" HorizontalAlignment="Center" Margin="0,108,0,0" VerticalAlignment="Top" Click="SearchBtnClicked" Height="34" Width="62" Name="SearchBtn"/>
+        <Button Content="Save" HorizontalAlignment="Center" Margin="0,327,0,0" VerticalAlignment="Top" Click="SavePasswordBtnClicked" Height="33" Width="62" Name="SaveBtn"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,382,0,0" TextWrapping="Wrap" Text="Pass" VerticalAlignment="Top" x:Name="Passtxt"/>
+        <Button Content="Open Searcher" HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top" Click="SearcherOpenbtnClicked"/>
+        <Button Content="Open Register" HorizontalAlignment="Left" Margin="13,281,0,0" VerticalAlignment="Top" Click="RegisterOpenbtnClicked"/>
+
+    </Grid>
+</Window>
