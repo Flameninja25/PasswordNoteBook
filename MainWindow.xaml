@@ -7,17 +7,56 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="450">
     <Grid>
-        <TextBlock HorizontalAlignment="Center" Margin="0,245,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" FontSize="20" Name="PasswordTxt"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,277,0,0" TextWrapping="Wrap" Text="Enter Password" VerticalAlignment="Top" Width="150" Name="tbxPasswordText" FontSize="20"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,150,0,0" TextWrapping="Wrap" Text="Service" VerticalAlignment="Top" FontSize="20" Name="ServiceTxt"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,182,0,0" TextWrapping="Wrap" Text="ServiceName" VerticalAlignment="Top" Width="150" FontSize="20" Name="tbxServiceName"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,46,0,0" TextWrapping="Wrap" Text="Wanted Service" VerticalAlignment="Top" FontSize="20" Name="WantedServiceTxt"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,71,0,0" TextWrapping="Wrap" Text="Search Service" VerticalAlignment="Top" Width="150" FontSize="20" Name="tbxServiceSearch"/>
-        <Button Content="Search" HorizontalAlignment="Center" Margin="0,108,0,0" VerticalAlignment="Top" Click="SearchBtnClicked" Height="34" Width="62" Name="SearchBtn"/>
-        <Button Content="Save" HorizontalAlignment="Center" Margin="0,327,0,0" VerticalAlignment="Top" Click="SavePasswordBtnClicked" Height="33" Width="62" Name="SaveBtn"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,382,0,0" TextWrapping="Wrap" Text="Pass" VerticalAlignment="Top" x:Name="Passtxt"/>
-        <Button Content="Open Searcher" HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top" Click="SearcherOpenbtnClicked"/>
-        <Button Content="Open Register" HorizontalAlignment="Left" Margin="13,281,0,0" VerticalAlignment="Top" Click="RegisterOpenbtnClicked"/>
 
+        <TabControl x:Name="tabControl">
+            <TabItem Header="LockScreenTab" Visibility="Collapsed">
+                <Grid Background="#FFE5E5E5">
+                    <Button Content="Unlock" HorizontalAlignment="Center" VerticalAlignment="Center" Height="103" Width="150" Click="OpenMainPageClicked" x:Name="LockBtn"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="MainMenuTab" Visibility="Collapsed">
+                <Grid Background="#FFE5E5E5">
+                    <TextBlock HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" Text="Content" VerticalAlignment="Top" FontSize="32"/>
+                    <Button Content="Open Register"  Margin="0,-70,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="RegisterOpenbtnClicked" x:Name="RegisterBtn" FontSize="20"/>
+                    <Button Content="Open Searcher" Margin="0,-210,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SearcherOpenbtnClicked" x:Name="SearcherBtn" FontSize="20"/>
+                    <Button Content="Open Remover"  Margin="0,70,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="RemoverOpenbtnClicked" x:Name="RemoverBtn" FontSize="20"/>
+                    <Button Content="Open All" Margin="0,210,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AllbtnClicked" x:Name="AllViewBtn" FontSize="20"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="SearchTab" Visibility="Collapsed">
+                <Grid Background="#FFE5E5E5">
+                    <Button Content="Search" HorizontalAlignment="Center" Margin="0,209,0,0" VerticalAlignment="Top" Click="SearchBtnClicked" Height="34" Width="62" x:Name="SearchBtn"/>
+                    <TextBlock HorizontalAlignment="Center" Margin="0,382,0,0" TextWrapping="Wrap" Text="Pass" VerticalAlignment="Top" x:Name="Passtxt"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="AddTab" Visibility="Collapsed">
+                <Grid Background="#FFE5E5E5">
+                    <TextBlock HorizontalAlignment="Center" Margin="0,245,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" FontSize="20" x:Name="PasswordTxt"/>
+                    <TextBox HorizontalAlignment="Center" Margin="0,277,0,0" TextWrapping="Wrap" Text="Enter Password" VerticalAlignment="Top" Width="150" x:Name="tbxPasswordText" FontSize="20"/>
+                    <Button Content="Save" HorizontalAlignment="Center" Margin="0,327,0,0" VerticalAlignment="Top" Click="SavePasswordBtnClicked" Height="33" Width="62" x:Name="SaveBtn"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="AllTab" Visibility="Collapsed">
+                <Grid Background="#FFE5E5E5">
+                    <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" TextWrapping="Wrap" Text="All Data" VerticalAlignment="Top" FontSize="20"/>
+                    <Grid Width="300" Height="400" Background="#000000">
+
+                        <DataGrid Height="390" Width="290" x:Name="MyDataSet" AutoGenerateColumns="True"/>
+
+
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="RemoveTab" Visibility="Collapsed">
+                <Grid Background="#FFE5E5E5">
+                    <Button Content="Remove" HorizontalAlignment="Center" Margin="0,209,0,0" VerticalAlignment="Top" Click="RemoveBtnClicked" Height="34" Width="62" x:Name="RemoveBtn"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button Content="Next Page" HorizontalAlignment="Right" Margin="0,0,22,22" VerticalAlignment="Bottom" Click="NextBtnClicked" Height="32" Width="62" x:Name="NextBtn"/>
+        <Button Content="Reset" HorizontalAlignment="Center" Margin="0,477,0,0" VerticalAlignment="Top" Click="ResetBtnClicked" Height="33" Width="62" x:Name="ResetBtn"/>
+        <Button Content="Home" HorizontalAlignment="Right" Margin="0,22,26,0" VerticalAlignment="Top" Click="HomeBtnClicked" Height="33" Width="62" x:Name="HomeBtn"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,142,0,0" TextWrapping="Wrap" Text="Service" VerticalAlignment="Top" FontSize="20" x:Name="ServiceTxt"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,172,0,0" TextWrapping="Wrap" Text="ServiceName" VerticalAlignment="Top" Width="150" FontSize="20" x:Name="tbxServiceName"/>
     </Grid>
 </Window>
