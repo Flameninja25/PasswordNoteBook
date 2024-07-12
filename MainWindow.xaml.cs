@@ -23,6 +23,7 @@ namespace PasswordNoteBook
     /// </summary>
     public partial class MainWindow : Window
     {
+        //enumerator for handling the pages
         enum Pages
         {
             Lock,
@@ -32,6 +33,8 @@ namespace PasswordNoteBook
             All,
             Remove
         }
+
+        //create a object of the database manager
         DataBaseManager dbManager = new DataBaseManager();
 
         public MainWindow()
@@ -43,58 +46,109 @@ namespace PasswordNoteBook
             //dbManager.CreateTables();
         }
 
+        /// <summary>
+        /// Search Button Clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void SearchBtnClicked(object sender, RoutedEventArgs e)
         {
             //dbManager.WipeDB(); 
+            //set the password text to the searched record
             Passtxt.Text = await dbManager.SearchRecord(tbxServiceName.Text);
 
         }
 
+        /// <summary>
+        /// Save button clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void SavePasswordBtnClicked(object sender, RoutedEventArgs e)
         {
             //dbManager.Test();
+            //add the new record to the database
             await dbManager.AddRecordsAsync(tbxServiceName.Text, tbxPasswordText.Text);
 
 
         }
+        /// <summary>
+        /// Next page button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void NextBtnClicked(object sender, RoutedEventArgs e)
         {
             HideGlobals();
+            //go to the next page
             tabControl.SelectedIndex += 1;
         }
 
+
+        /// <summary>
+        /// Reset Button Clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void ResetBtnClicked(object sender, RoutedEventArgs e)
         {
+            //wipe the database and all records
             dbManager.WipeDB();
         }
 
+        /// <summary>
+        /// Remove button clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void RemoveBtnClicked(object sender, RoutedEventArgs e)
         {
+            //remove the set record
             dbManager.RemoveRecord(tbxServiceName.Text);
         }
 
+        /// <summary>
+        /// Open the main page button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenMainPageClicked(object sender, RoutedEventArgs e)
         {
             tabControl.SelectedIndex = (int)Pages.Main;
 
         }
 
+        /// <summary>
+        /// Button to open teh search page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SearcherOpenbtnClicked(object sender, RoutedEventArgs e)
         {
             OpenSearch();
         }
 
-
+        //button to open the remove page
         private void RemoverOpenbtnClicked(object sender, RoutedEventArgs e)
         {
             OpenRemove();
         }
 
+        /// <summary>
+        /// button to open the all page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AllbtnClicked(object sender, RoutedEventArgs e)
         {
             OpenAll();
         }
 
+        /// <summary>
+        /// button to open the register page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RegisterOpenbtnClicked(object sender, RoutedEventArgs e)
         {
             OpenRegister();
@@ -102,7 +156,9 @@ namespace PasswordNoteBook
             //RegisterBtn.Visibility = Visibility.Visible;
         }
 
-        //code to open up the Search Page
+        /// <summary>
+        /// code to open up the Search Page
+        /// </summary>
         public void OpenSearch()
         {
             HideGlobals();
@@ -115,7 +171,9 @@ namespace PasswordNoteBook
         }
 
 
-        //code to open up the Register page
+        /// <summary>
+        /// code to open up the Register page
+        /// </summary>
         public void OpenRegister()
         {
             HideGlobals();
@@ -128,6 +186,9 @@ namespace PasswordNoteBook
 
         }
 
+        /// <summary>
+        /// Opens the remove page
+        /// </summary>
         public void OpenRemove()
         {
             HideGlobals();
@@ -139,27 +200,41 @@ namespace PasswordNoteBook
             tabControl.SelectedIndex = (int)Pages.Remove;
         }
 
+        /// <summary>
+        /// open the page for showing all data
+        /// </summary>
         public void OpenAll()
         {
+            //hide the globals
             HideGlobals();
             HomeBtn.Visibility = Visibility.Visible;
             NextBtn.Visibility = Visibility.Visible;
 
+            //do to all page
             tabControl.SelectedIndex = (int)Pages.All;
 
+            //create empty database to be filled
             DataTable db = new DataTable();
 
+            //wait for the task to complete
             Task.WaitAll(new Task[] { Task.Run(async () => db = await dbManager.GetTableData()) });
 
+            //set the data grid to the data in the new datatable
             MyDataSet.ItemsSource = db.DefaultView;
         }
 
+        /// <summary>
+        /// Open the lock page for the start screen
+        /// </summary>
         public void OpenLock()
         {
             HideGlobals();
             tabControl.SelectedIndex = (int)Pages.Lock;
         }
 
+        /// <summary>
+        /// Hides the form components that are visible on multiple pages
+        /// </summary>
         public void HideGlobals()
         {
             tbxServiceName.Visibility = Visibility.Hidden;
@@ -168,6 +243,12 @@ namespace PasswordNoteBook
             HomeBtn.Visibility = Visibility.Hidden;
         }
 
+
+        /// <summary>
+        /// Button to return to the home page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void HomeBtnClicked(object sender, RoutedEventArgs e)
         {
             HideGlobals();
@@ -176,7 +257,9 @@ namespace PasswordNoteBook
         }
     }
 
-
+    /// <summary>
+    /// Class for handling all database commands
+    /// </summary>
     public class DataBaseManager
     {
         private static readonly String DBMaster = "Server=(localdb)\\MSSQLLocalDB;Integrated security=SSPI;database=master";
@@ -193,11 +276,14 @@ namespace PasswordNoteBook
         /// <returns></returns>
         public async Task CreateDB()
         {
+            //check if the database exists
             if (await CheckConnectDB())return;
             //Task taskResult = Task.Run(async () =>
             //{
+                //use the master connection
                 using (var connection = new SqlConnection("Server=(localdb)\\MSSQLLocalDB;Integrated security=SSPI;database=master"))
                 {
+                    //Sql used to create the database and the needed files
                     string cmdStr = "CREATE DATABASE PasswordsDB ON PRIMARY " +
                                     "(NAME = PasswordsDB_Data, " +
                                     $"FILENAME = '{DBLocation}', " +
@@ -207,7 +293,8 @@ namespace PasswordNoteBook
                                     "SIZE = 1MB, " +
                                     "MAXSIZE = 10MB, " +
                                     "FILEGROWTH = 10%)";
-
+                    
+                    //run teh creation command
                     using (var myCommand = new SqlCommand(cmdStr, connection))
                     {
                         connection.Open();
@@ -215,6 +302,7 @@ namespace PasswordNoteBook
                         await myCommand.ExecuteNonQueryAsync();
                     }
 
+                    //create the starting table for the passwords
                     string cmdStr2 = "USE [PasswordsDB]; CREATE TABLE PASSWORDS (ID INT PRIMARY KEY IDENTITY(1,1), SERVICENAME VARCHAR(255), PASSWORD VARCHAR(255))";
                     using (var command = new SqlCommand(cmdStr2, connection))
                     {                          
@@ -224,31 +312,7 @@ namespace PasswordNoteBook
                     await connection.CloseAsync();
                 }
             //});
-
             //Task.WaitAll(new Task[] {taskResult});
-
-
-
-            //System.Threading.Thread.Sleep(5000);
-            //CreateTables();
-        }
-
-        /// <summary>
-        /// create the pass word data (not in use)
-        /// </summary>
-        public void CreateTables()
-        {
-            //if (!CheckConnectDB()) return;
-            using (var connection = new SqlConnection(DataPath))
-            {
-
-                string cmdStr = "CREATE TABLE PASSWORDS (ID INT PRIMARY KEY IDENTITY(1,1), SERVICENAME VARCHAR(255), PASSWORD VARCHAR(255))";
-                using (var command = new SqlCommand(cmdStr, connection))
-                {
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
         }
 
         /// <summary>
@@ -259,15 +323,19 @@ namespace PasswordNoteBook
         /// <returns></returns>
         public async Task AddRecordsAsync(string serviceName, string password)
         {
+            //check if the database exists
             if (!await CheckConnectDB()) return;
             using (var connection = new SqlConnection(DataPath))
             {
+                //SQL to insert the new record using the defined service name and password
                 string cmdStr = "INSERT INTO dbo.PASSWORDS (SERVICENAME, PASSWORD) VALUES (@servicename, @password) ";
                 using (var command = new SqlCommand(cmdStr, connection))
                 {
+                    //use parameters to add the service name and password to avoid sql injection
                     command.Parameters.AddRange(new SqlParameter[] {new SqlParameter("@servicename", serviceName),new SqlParameter("@password", password)});
                     connection.Open();
-                    await command.ExecuteNonQueryAsync();                }
+                    await command.ExecuteNonQueryAsync();               
+                }
             }
 
             //return true;
@@ -280,19 +348,24 @@ namespace PasswordNoteBook
         /// <returns></returns>
         public async Task<string> SearchRecord(string serviceName)
         {
+            //Check if the database exists
             if (!await CheckConnectDB()) return "Error";
 
+            //SQL code to get the record where the given service name is located
             string cmdStr = "SELECT [PASSWORD] FROM dbo.PASSWORDS WHERE SERVICENAME = @serviceName";
 
             using( var connection = new SqlConnection(DataPath))
             {
                 using(var command = new SqlCommand(cmdStr, connection))
                 {
+                    //uses parameters to avoid sql injection
                     command.Parameters.AddRange(new SqlParameter[] { new SqlParameter("@servicename", serviceName)});
                     await connection.OpenAsync();
 
+                    //get the result from the command
                     object? result = await command.ExecuteScalarAsync();
 
+                    //get the string result being the password
                     string str = result == null ? "Not Found" : result.ToString();
 
                     return str;
@@ -330,6 +403,10 @@ namespace PasswordNoteBook
             }
         }
 
+        /// <summary>
+        /// method to check if the database exists
+        /// </summary>
+        /// <returns></returns>
         public bool CheckExistDB() => (File.Exists(DBLocation) && File.Exists(DBLogLocation));
 
         /// <summary>
@@ -338,13 +415,16 @@ namespace PasswordNoteBook
         /// <param name="serviceName"></param>
         public async void RemoveRecord(string serviceName)
         {
+            //check if the database exists
             if(!await CheckConnectDB()) return;
             using (var connection = new SqlConnection(DataPath))
             {
+                //get the SQL command to delete the record where the given serivce name is
                 string cmdStr = "DELETE FROM dbo.PASSWORDS WHERE SERVICENAME = @serviceName";
 
                 using (var command = new SqlCommand(cmdStr, connection))
                 {
+                    //use parameters to avoid SQL injection
                     command.Parameters.AddRange(new SqlParameter[] { new SqlParameter("servicename", serviceName) });
                     await connection.OpenAsync();
                     await command.ExecuteScalarAsync();
@@ -376,6 +456,7 @@ namespace PasswordNoteBook
         {
             using (var connection = new SqlConnection(DBMaster))
             {
+                //Sql code to drop the database
                 using (var command = new SqlCommand("USE Master; ALTER DATABASE PasswordsDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE PasswordsDB", connection))
                 {
                     await connection.OpenAsync();
@@ -395,6 +476,7 @@ namespace PasswordNoteBook
         /// </summary>
         public async Task<DataTable> GetTableData()
         {
+            //sql command to get all info from the database
             string cmdStr = "SELECT * FROM dbo.PASSWORDS";
 
             using(var connection = new SqlConnection(DataPath))
@@ -404,6 +486,7 @@ namespace PasswordNoteBook
                     await connection.OpenAsync();
                     await command.ExecuteNonQueryAsync();
 
+                    //use the SQL adapter to add all the table data to a new data base
                     SqlDataAdapter adapter = new SqlDataAdapter(command);
                     DataTable dt = new DataTable("PASSWORDS");
                     adapter.Fill(dt);
