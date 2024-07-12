@@ -37,6 +37,9 @@ namespace PasswordNoteBook
         //create a object of the database manager
         DataBaseManager dbManager = new DataBaseManager();
 
+        //variable to store the current page
+        Pages currentPage;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -79,9 +82,27 @@ namespace PasswordNoteBook
         /// <param name="e"></param>
         public void NextBtnClicked(object sender, RoutedEventArgs e)
         {
-            HideGlobals();
-            //go to the next page
-            tabControl.SelectedIndex += 1;
+            //HideGlobals();
+            //go to the next page based on current page
+            switch (currentPage)
+            {
+                case Pages.Main:
+                    OpenSearch();
+                    break;
+                case Pages.Search:
+                    OpenRegister();
+                    break;
+                case Pages.Add:
+                    OpenRemove();
+                    break;
+                case Pages.Remove:
+                    OpenAll();
+                    break;
+                case Pages.All:
+                    OpenHome();
+                    break;
+            }
+
         }
 
 
@@ -114,9 +135,46 @@ namespace PasswordNoteBook
         /// <param name="e"></param>
         private void OpenMainPageClicked(object sender, RoutedEventArgs e)
         {
-            tabControl.SelectedIndex = (int)Pages.Main;
+            OpenHome();
 
         }
+
+        public void SortBtnClicked(object sender, RoutedEventArgs e)
+        {
+            //create empty database to be filled
+            DataTable db = new DataTable();
+
+            //wait for the task to complete
+            Task.WaitAll(new Task[] { Task.Run(async () => db = await dbManager.GetSortedTableData()) });
+
+            //set the data grid to the data in the new datatable
+            MyDataSet.ItemsSource = db.DefaultView;
+        }
+
+
+        public void UnSortBtnClicked(object sender, RoutedEventArgs e)
+        {
+            //create empty database to be filled
+            DataTable db = new DataTable();
+
+            //wait for the task to complete
+            Task.WaitAll(new Task[] { Task.Run(async () => db = await dbManager.GetTableData()) });
+
+            //set the data grid to the data in the new datatable
+            MyDataSet.ItemsSource = db.DefaultView;
+        }
+
+
+        /// <summary>
+        /// Button to return to the home page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void HomeBtnClicked(object sender, RoutedEventArgs e)
+        {
+            OpenHome();
+        }
+
 
         /// <summary>
         /// Button to open teh search page
@@ -168,6 +226,7 @@ namespace PasswordNoteBook
             NextBtn.Visibility = Visibility.Visible;
 
             tabControl.SelectedIndex = (int)Pages.Search;
+            currentPage = Pages.Search;
         }
 
 
@@ -183,6 +242,7 @@ namespace PasswordNoteBook
             NextBtn.Visibility = Visibility.Visible;
 
             tabControl.SelectedIndex = (int)Pages.Add;
+            currentPage = Pages.Add;
 
         }
 
@@ -198,6 +258,7 @@ namespace PasswordNoteBook
             NextBtn.Visibility = Visibility.Visible;
 
             tabControl.SelectedIndex = (int)Pages.Remove;
+            currentPage = Pages.Remove;
         }
 
         /// <summary>
@@ -212,6 +273,7 @@ namespace PasswordNoteBook
 
             //do to all page
             tabControl.SelectedIndex = (int)Pages.All;
+            currentPage = Pages.All;
 
             //create empty database to be filled
             DataTable db = new DataTable();
@@ -230,6 +292,7 @@ namespace PasswordNoteBook
         {
             HideGlobals();
             tabControl.SelectedIndex = (int)Pages.Lock;
+            currentPage = Pages.Lock;
         }
 
         /// <summary>
@@ -243,17 +306,15 @@ namespace PasswordNoteBook
             HomeBtn.Visibility = Visibility.Hidden;
         }
 
-
         /// <summary>
-        /// Button to return to the home page
+        /// Opens the home page
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void HomeBtnClicked(object sender, RoutedEventArgs e)
+        public void OpenHome()
         {
             HideGlobals();
 
             tabControl.SelectedIndex = (int)Pages.Main;
+            currentPage = Pages.Main;
         }
     }
 
@@ -480,6 +541,32 @@ namespace PasswordNoteBook
             string cmdStr = "SELECT * FROM dbo.PASSWORDS";
 
             using(var connection = new SqlConnection(DataPath))
+            {
+                using (var command = new SqlCommand(cmdStr, connection))
+                {
+                    await connection.OpenAsync();
+                    await command.ExecuteNonQueryAsync();
+
+                    //use the SQL adapter to add all the table data to a new data base
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dt = new DataTable("PASSWORDS");
+                    adapter.Fill(dt);
+                    adapter.Update(dt);
+                    return dt;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Return the records in the table
+        /// </summary>
+        /// <returns></returns>
+        public async Task<DataTable> GetSortedTableData()
+        {
+            //sql command to get all info from the database
+            string cmdStr = "SELECT * FROM dbo.PASSWORDS ORDER BY SERVICENAME";
+
+            using (var connection = new SqlConnection(DataPath))
             {
                 using (var command = new SqlCommand(cmdStr, connection))
                 {
