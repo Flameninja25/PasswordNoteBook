@@ -50,6 +50,19 @@ namespace PasswordNoteBook
         }
 
         /// <summary>
+        /// Triggers when the program loads
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //sets the grid to a locked size
+            ClearValue(SizeToContentProperty);
+            RootGrid.ClearValue(WidthProperty);
+            RootGrid.ClearValue(HeightProperty);
+        }
+
+        /// <summary>
         /// Search Button Clicked
         /// </summary>
         /// <param name="sender"></param>

@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:PasswordNoteBook"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="CustomFont">
+            <Setter Property="TextElement.FontFamily" Value="fonts/#Handwriting"></Setter>
+        </Style>
     </Application.Resources>
 </Application>
