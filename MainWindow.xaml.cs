@@ -31,11 +31,15 @@ namespace PasswordNoteBook
             Search,
             Add,
             All,
-            Remove
+            Remove,
+            Pin
         }
 
         //create a object of the database manager
         DataBaseManager dbManager = new DataBaseManager();
+
+        //sound manager
+        SFXManager sFXManager = new SFXManager();
 
         //variable to store the current page
         Pages currentPage;
@@ -75,6 +79,41 @@ namespace PasswordNoteBook
 
         }
 
+        //the lock button is clicked
+        private async void LockedBtnClicked(object sender, RoutedEventArgs e)
+        {
+            if(Convert.ToBoolean(await dbManager.CheckPassword()) == false)
+            {
+                OpenHome();
+            }
+            else
+            {
+                if(Convert.ToBoolean(await dbManager.PasswordValid(tbxPasswordCheck.Text)) == true)
+                {
+                    OpenHome();
+                }
+                else
+                {
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// Button for setting the password manager pin to the given text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void SetPinBtnClicked(object sender, RoutedEventArgs e)
+        {
+            //remove the set record
+            dbManager.RemoveRecord("pin");
+            //set the pin to the relevant record
+            await dbManager.AddRecordsAsync("pin", tbxPinText.Text);
+            ConfirmPinText.Text = "Pin Set";
+
+        }
+
         /// <summary>
         /// Save button clicked
         /// </summary>
@@ -95,6 +134,7 @@ namespace PasswordNoteBook
         /// <param name="e"></param>
         public void NextBtnClicked(object sender, RoutedEventArgs e)
         {
+            sFXManager.ChangePage();
             //HideGlobals();
             //go to the next page based on current page
             switch (currentPage)
@@ -114,6 +154,9 @@ namespace PasswordNoteBook
                 case Pages.All:
                     OpenHome();
                     break;
+                default:
+                    OpenHome();
+                    break;
             }
 
         }
@@ -128,6 +171,12 @@ namespace PasswordNoteBook
         {
             //wipe the database and all records
             dbManager.WipeDB();
+        }
+
+        //button for when the pin page button is clicked
+        public void PinbtnClicked(object sender, RoutedEventArgs e)
+        {
+            OpenPin();
         }
 
         /// <summary>
@@ -152,6 +201,11 @@ namespace PasswordNoteBook
 
         }
 
+        /// <summary>
+        /// returns the table to the order by ID rather then a-z
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void SortBtnClicked(object sender, RoutedEventArgs e)
         {
             //create empty database to be filled
@@ -303,6 +357,13 @@ namespace PasswordNoteBook
         /// </summary>
         public void OpenLock()
         {
+            tbxPasswordCheck.Visibility = Visibility.Hidden;
+            bool tempBool = false;
+            Task.WaitAll(new Task[] { Task.Run(async () => tempBool = Convert.ToBoolean(await dbManager.CheckPassword())) });
+            if(tempBool)
+            {
+                tbxPasswordCheck.Visibility = Visibility.Visible;
+            }
             HideGlobals();
             tabControl.SelectedIndex = (int)Pages.Lock;
             currentPage = Pages.Lock;
@@ -317,6 +378,7 @@ namespace PasswordNoteBook
             ServiceTxt.Visibility = Visibility.Hidden;
             NextBtn.Visibility = Visibility.Hidden;
             HomeBtn.Visibility = Visibility.Hidden;
+            sFXManager.ChangePage();
         }
 
         /// <summary>
@@ -328,6 +390,24 @@ namespace PasswordNoteBook
 
             tabControl.SelectedIndex = (int)Pages.Main;
             currentPage = Pages.Main;
+        }
+
+        /// <summary>
+        /// opesn the page to set the pin
+        /// </summary>
+        private void OpenPin()
+        {
+            HideGlobals();
+
+            //set text to blank
+            ConfirmPinText.Text = "";
+
+            //set the page to the pin page
+            tabControl.SelectedIndex = (int)Pages.Pin;
+            currentPage = Pages.Pin;
+
+            //set the home btn to visible
+            HomeBtn.Visibility = Visibility.Visible;
         }
     }
 
@@ -528,6 +608,7 @@ namespace PasswordNoteBook
         /// </summary>
         public async void WipeDB()
         {
+            if (!await CheckConnectDB()) return;
             using (var connection = new SqlConnection(DBMaster))
             {
                 //Sql code to drop the database
@@ -592,6 +673,70 @@ namespace PasswordNoteBook
                     adapter.Fill(dt);
                     adapter.Update(dt);
                     return dt;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method to check if password exists
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> CheckPassword()
+        {
+            if (!await CheckConnectDB()) return false;
+            //command string to get count of values that are in the pin record
+            string cmdStr = "SELECT " +
+                "CASE WHEN x.COUNT > 0 THEN 1 " +
+                "ELSE 0 " +
+                "END AS [EXISTS] " +
+                "FROM " +
+                "(SELECT COUNT (*) AS [COUNT] FROM dbo.PASSWORDS p WHERE p.[SERVICENAME] = 'pin') x";
+
+            //run query
+            using (var connection = new SqlConnection(DataPath))
+            {
+                using (var command = new SqlCommand(cmdStr, connection))
+                {
+                    await connection.OpenAsync();
+                    object? result = await command.ExecuteScalarAsync();
+
+                    //return the interger converted to a bool
+                    return Convert.ToBoolean(result);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method to check if the password is valid
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public async Task<bool> PasswordValid(string password)
+        {
+            //check database connection
+            if (!await CheckConnectDB()) return false;
+            //make the sql command string
+            string cmdStr = "SELECT [PASSWORD] FROM PASSWORDS WHERE SERVICENAME = 'pin'";
+
+            //run query
+            using (var connection = new SqlConnection(DataPath))
+            {
+                using (var command = new SqlCommand(cmdStr,connection))
+                {
+                    await connection.OpenAsync();
+                    object? result = await command.ExecuteScalarAsync();
+
+                    string str = result == null ? "Not Found" : result.ToString();
+
+                    //check if the gotten record data matches the given string
+                    if(str == password)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
         }
