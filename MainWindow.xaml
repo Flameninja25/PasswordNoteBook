@@ -88,7 +88,7 @@
                     <Button Content="Remove" HorizontalAlignment="Center" Margin="0,-50,0,0" VerticalAlignment="Center" Click="RemoveBtnClicked" Height="34" Width="100" x:Name="RemoveBtn" FontSize="32" Style="{StaticResource CustomFont}"/>
                 </Grid>
             </TabItem>
-            <TabItem>
+            <TabItem Header="LockScreenTab" Visibility="Collapsed">
                 <Grid>
                     <Grid.Background>
                         <ImageBrush ImageSource="/images/background.png" Stretch="UniformToFill"/>

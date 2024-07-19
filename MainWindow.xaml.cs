@@ -39,7 +39,7 @@ namespace PasswordNoteBook
         DataBaseManager dbManager = new DataBaseManager();
 
         //sound manager
-        SFXManager sFXManager = new SFXManager();
+        SFXManager SFXManager = new SFXManager();
 
         //variable to store the current page
         Pages currentPage;
@@ -76,6 +76,7 @@ namespace PasswordNoteBook
             //dbManager.WipeDB(); 
             //set the password text to the searched record
             Passtxt.Text = await dbManager.SearchRecord(tbxServiceName.Text);
+            SFXManager.WriteInfo();
 
         }
 
@@ -85,12 +86,14 @@ namespace PasswordNoteBook
             if(Convert.ToBoolean(await dbManager.CheckPassword()) == false)
             {
                 OpenHome();
+                SFXManager.UnlockPage();
             }
             else
             {
                 if(Convert.ToBoolean(await dbManager.PasswordValid(tbxPasswordCheck.Text)) == true)
                 {
                     OpenHome();
+                    SFXManager.UnlockPage();
                 }
                 else
                 {
@@ -111,6 +114,7 @@ namespace PasswordNoteBook
             //set the pin to the relevant record
             await dbManager.AddRecordsAsync("pin", tbxPinText.Text);
             ConfirmPinText.Text = "Pin Set";
+            SFXManager.WriteInfo();
 
         }
 
@@ -124,6 +128,7 @@ namespace PasswordNoteBook
             //dbManager.Test();
             //add the new record to the database
             await dbManager.AddRecordsAsync(tbxServiceName.Text, tbxPasswordText.Text);
+            SFXManager.WriteInfo();
 
 
         }
@@ -134,7 +139,7 @@ namespace PasswordNoteBook
         /// <param name="e"></param>
         public void NextBtnClicked(object sender, RoutedEventArgs e)
         {
-            sFXManager.ChangePage();
+            SFXManager.ChangePage();
             //HideGlobals();
             //go to the next page based on current page
             switch (currentPage)
@@ -216,6 +221,7 @@ namespace PasswordNoteBook
 
             //set the data grid to the data in the new datatable
             MyDataSet.ItemsSource = db.DefaultView;
+            SFXManager.WriteInfo();
         }
 
 
@@ -229,6 +235,7 @@ namespace PasswordNoteBook
 
             //set the data grid to the data in the new datatable
             MyDataSet.ItemsSource = db.DefaultView;
+            SFXManager.WriteInfo();
         }
 
 
@@ -350,6 +357,8 @@ namespace PasswordNoteBook
 
             //set the data grid to the data in the new datatable
             MyDataSet.ItemsSource = db.DefaultView;
+
+            SFXManager.WriteInfo();
         }
 
         /// <summary>
@@ -378,7 +387,7 @@ namespace PasswordNoteBook
             ServiceTxt.Visibility = Visibility.Hidden;
             NextBtn.Visibility = Visibility.Hidden;
             HomeBtn.Visibility = Visibility.Hidden;
-            sFXManager.ChangePage();
+            SFXManager.ChangePage();
         }
 
         /// <summary>
