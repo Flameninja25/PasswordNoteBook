@@ -4,8 +4,21 @@
              xmlns:local="clr-namespace:PasswordNoteBook"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style x:Key="CustomFont">
+        <Style x:Key="CustomFont" TargetType="FrameworkElement">
             <Setter Property="TextElement.FontFamily" Value="fonts/#Handwriting"></Setter>
         </Style>
+        <Style x:Key="TextBox" TargetType="TextBox" BasedOn="{StaticResource CustomFont}">
+            <Setter Property="TextElement.Background" Value="Transparent"/>
+            <Setter Property="TextBox.BorderThickness" Value="0"/>
+            <Setter Property="TextElement.Foreground" Value="DarkCyan"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+
+        </Style>
+        <Style x:Key="Button" TargetType="Button" BasedOn="{StaticResource CustomFont}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="TextBox.BorderThickness" Value="0"/>
+            <Setter Property="TextElement.Foreground" Value="DarkCyan"/>
+        </Style>
+
     </Application.Resources>
 </Application>

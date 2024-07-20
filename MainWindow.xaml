@@ -21,12 +21,12 @@
                         <ImageBrush ImageSource="/images/background.png" Stretch="UniformToFill"/>
                     </Grid.Background>
 
-                    <Button HorizontalAlignment="Center" VerticalAlignment="Center" Height="150" Width="150" Click="LockedBtnClicked" x:Name="LockBtn" FontSize="32" Style="{StaticResource CustomFont}">
+                    <Button HorizontalAlignment="Center" VerticalAlignment="Center" Height="150" Width="150" Click="LockedBtnClicked" x:Name="LockBtn" FontSize="32" Style="{StaticResource Button}">
                         <StackPanel>
                             <Image Source="/images/lock.png"/>
                         </StackPanel>
                     </Button>
-                    <TextBox HorizontalAlignment="Center" Margin="0,185,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Width="200" x:Name="tbxPasswordCheck" FontSize="32" Style="{StaticResource CustomFont}"/>
+                    <TextBox HorizontalAlignment="Center" Margin="0,185,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Width="200" x:Name="tbxPasswordCheck" FontSize="32" Style="{StaticResource TextBox}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="MainMenuTab" Visibility="Collapsed">
@@ -36,11 +36,11 @@
                     </Grid.Background>
 
                     <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" TextWrapping="Wrap" Text="Content" VerticalAlignment="Top" FontSize="56" Style="{StaticResource CustomFont}" />
-                    <Button Content="Open Register"  Margin="0,-50,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="RegisterOpenbtnClicked" x:Name="RegisterBtn" FontSize="32" Style="{StaticResource CustomFont}"/>
-                    <Button Content="Open Searcher" Margin="0,-150,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SearcherOpenbtnClicked" x:Name="SearcherBtn" FontSize="32" Style="{StaticResource CustomFont}"/>
-                    <Button Content="Open Remover"  Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="RemoverOpenbtnClicked" x:Name="RemoverBtn" FontSize="32" Style="{StaticResource CustomFont}"/>
-                    <Button Content="Open All" Margin="0,150,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AllbtnClicked" x:Name="AllViewBtn" FontSize="32" Style="{StaticResource CustomFont}"/>
-                    <Button Content="Set Pin" Margin="0,355,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="PinbtnClicked" x:Name="PinBtn" FontSize="32" Style="{StaticResource CustomFont}"/>
+                    <Button Content="Open Register"  Margin="0,-50,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="RegisterOpenbtnClicked" x:Name="RegisterBtn" FontSize="32" Style="{StaticResource Button}"/>
+                    <Button Content="Open Searcher" Margin="0,-150,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SearcherOpenbtnClicked" x:Name="SearcherBtn" FontSize="32" Style="{StaticResource Button}"/>
+                    <Button Content="Open Remover"  Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="RemoverOpenbtnClicked" x:Name="RemoverBtn" FontSize="32" Style="{StaticResource Button}"/>
+                    <Button Content="Open All" Margin="0,150,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AllbtnClicked" x:Name="AllViewBtn" FontSize="32" Style="{StaticResource Button}"/>
+                    <Button Content="Set Pin" Margin="0,355,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="PinbtnClicked" x:Name="PinBtn" FontSize="32" Style="{StaticResource Button}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="SearchTab" Visibility="Collapsed">
@@ -49,7 +49,7 @@
                         <ImageBrush ImageSource="/images/background.png" Stretch="UniformToFill"/>
                     </Grid.Background>
 
-                    <Button Content="Search" HorizontalAlignment="Center" Margin="0,221,0,0" VerticalAlignment="Top" Click="SearchBtnClicked" Height="35" Width="80" x:Name="SearchBtn" FontSize="32" Style="{StaticResource CustomFont}"/>
+                    <Button Content="Search" HorizontalAlignment="Center" Margin="0,221,0,0" VerticalAlignment="Top" Click="SearchBtnClicked" Height="35" Width="80" x:Name="SearchBtn" FontSize="32" Style="{StaticResource Button}"/>
                     <TextBlock HorizontalAlignment="Center" Margin="0,386,0,0" TextWrapping="Wrap" Text="Pass" VerticalAlignment="Top" x:Name="Passtxt" FontSize="32" Style="{StaticResource CustomFont}"/>
                 </Grid>
             </TabItem>
@@ -60,8 +60,8 @@
                     </Grid.Background>
 
                     <TextBlock HorizontalAlignment="Center" Margin="0,235,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" FontSize="32" Style="{StaticResource CustomFont}" x:Name="PasswordTxt"/>
-                    <TextBox HorizontalAlignment="Center" Margin="0,280,0,0" TextWrapping="Wrap" Text="Enter Password" VerticalAlignment="Top" Width="200" x:Name="tbxPasswordText" FontSize="32" Style="{StaticResource CustomFont}"/>
-                    <Button Content="Save" HorizontalAlignment="Center" Margin="0,370,0,0" VerticalAlignment="Top" Click="SavePasswordBtnClicked" Height="40" Width="80" x:Name="SaveBtn" FontSize="32" Style="{StaticResource CustomFont}"/>
+                    <TextBox HorizontalAlignment="Center" Margin="0,280,0,0" TextWrapping="Wrap" Text="Enter Password" VerticalAlignment="Top" Width="200" x:Name="tbxPasswordText" FontSize="32" Style="{StaticResource TextBox}"/>
+                    <Button Content="Save" HorizontalAlignment="Center" Margin="0,370,0,0" VerticalAlignment="Top" Click="SavePasswordBtnClicked" Height="40" Width="80" x:Name="SaveBtn" FontSize="32" Style="{StaticResource Button}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="AllTab" Visibility="Collapsed">
@@ -71,8 +71,8 @@
                     </Grid.Background>
 
                     <TextBlock HorizontalAlignment="Center" Margin="0,30,0,0" TextWrapping="Wrap" Text="All Data" VerticalAlignment="Top" FontSize="32" Style="{StaticResource CustomFont}"/>
-                    <Button Content="Sort" HorizontalAlignment="Left" Margin="0,150,0,0" VerticalAlignment="Center" Click="SortBtnClicked" Height="33" Width="60" FontSize="24" Style="{StaticResource CustomFont}"/>
-                    <Button Content="UnSort" HorizontalAlignment="Left" Margin="0,-50,0,0" VerticalAlignment="Center" Click="UnSortBtnClicked" Height="40" Width="60" FontSize="24" Style="{StaticResource CustomFont}"/>
+                    <Button Content="Sort" HorizontalAlignment="Left" Margin="0,150,0,0" VerticalAlignment="Center" Click="SortBtnClicked" Height="33" Width="60" FontSize="24" Style="{StaticResource Button}"/>
+                    <Button Content="UnSort" HorizontalAlignment="Left" Margin="0,-50,0,0" VerticalAlignment="Center" Click="UnSortBtnClicked" Height="40" Width="60" FontSize="24" Style="{StaticResource Button}"/>
 
                     <Grid Width="300" Height="400" Background="#000000">
                         <DataGrid Height="390" Width="290" x:Name="MyDataSet" AutoGenerateColumns="True"/>
@@ -85,7 +85,7 @@
                         <ImageBrush ImageSource="/images/background.png" Stretch="UniformToFill"/>
                     </Grid.Background>
 
-                    <Button Content="Remove" HorizontalAlignment="Center" Margin="0,-50,0,0" VerticalAlignment="Center" Click="RemoveBtnClicked" Height="34" Width="100" x:Name="RemoveBtn" FontSize="32" Style="{StaticResource CustomFont}"/>
+                    <Button Content="Remove" HorizontalAlignment="Center" Margin="0,-50,0,0" VerticalAlignment="Center" Click="RemoveBtnClicked" Height="34" Width="100" x:Name="RemoveBtn" FontSize="32" Style="{StaticResource Button}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="LockScreenTab" Visibility="Collapsed">
@@ -96,15 +96,15 @@
                     
                     <TextBlock HorizontalAlignment="Center" Margin="0,141,0,0" TextWrapping="Wrap" Text="Set Pin" VerticalAlignment="Top" FontSize="32" Style="{StaticResource CustomFont}"/>
                     <TextBlock HorizontalAlignment="Center" Margin="0,255,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" FontSize="32" x:Name="ConfirmPinText"  Style="{StaticResource CustomFont}"/>
-                    <TextBox HorizontalAlignment="Center" Margin="0,177,0,0" TextWrapping="Wrap" Text="Pin" VerticalAlignment="Top" Width="200" x:Name="tbxPinText" FontSize="32" Style="{StaticResource CustomFont}"/>
-                    <Button Content="Set Pin" HorizontalAlignment="Center" Margin="0,-50,0,0" VerticalAlignment="Center" Click="SetPinBtnClicked" Height="40" Width="160" x:Name="SetPinBtn" FontSize="32" Style="{StaticResource CustomFont}"/>
+                    <TextBox HorizontalAlignment="Center" Margin="0,177,0,0" TextWrapping="Wrap" Text="Pin" VerticalAlignment="Top" Width="200" x:Name="tbxPinText" FontSize="32" Style="{StaticResource TextBox}"/>
+                    <Button Content="Set Pin" HorizontalAlignment="Center" Margin="0,-50,0,0" VerticalAlignment="Center" Click="SetPinBtnClicked" Height="40" Width="160" x:Name="SetPinBtn" FontSize="32" Style="{StaticResource Button}"/>
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button Content="Next Page" HorizontalAlignment="Right" Margin="0,0,18,13" VerticalAlignment="Bottom" Click="NextBtnClicked" Height="40" Width="100" x:Name="NextBtn" FontSize="24" Style="{StaticResource CustomFont}"/>
-        <Button Content="Reset" HorizontalAlignment="Center" Margin="0,580,0,0" VerticalAlignment="Top" Click="ResetBtnClicked" Height="40" Width="80" x:Name="ResetBtn" FontSize="32" Style="{StaticResource CustomFont}"/>
-        <Button Content="Home" HorizontalAlignment="Right" Margin="0,14,18,0" VerticalAlignment="Top" Click="HomeBtnClicked" Height="40" Width="80" x:Name="HomeBtn" FontSize="32" Style="{StaticResource CustomFont}"/>
+        <Button Content="Next Page >" HorizontalAlignment="Right" Margin="0,0,18,13" VerticalAlignment="Bottom" Click="NextBtnClicked" Height="40" Width="120" x:Name="NextBtn" FontSize="24" Style="{StaticResource Button}"/>
+        <Button Content="Reset" HorizontalAlignment="Center" Margin="0,580,0,0" VerticalAlignment="Top" Click="ResetBtnClicked" Height="40" Width="80" x:Name="ResetBtn" FontSize="32" Style="{StaticResource Button}"/>
+        <Button Content="Home ^" HorizontalAlignment="Right" Margin="0,14,18,0" VerticalAlignment="Top" Click="HomeBtnClicked" Height="40" Width="100" x:Name="HomeBtn" FontSize="32" Style="{StaticResource Button}"/>
         <TextBlock HorizontalAlignment="Center" Margin="0,141,0,0" TextWrapping="Wrap" Text="Service" VerticalAlignment="Top" FontSize="32" x:Name="ServiceTxt" Style="{StaticResource CustomFont}"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,185,0,0" TextWrapping="Wrap" Text="ServiceName" VerticalAlignment="Top" Width="200" x:Name="tbxServiceName" FontSize="32" Style="{StaticResource CustomFont}"/>
+        <TextBox  HorizontalAlignment="Center" Margin="0,185,0,0" TextWrapping="Wrap" Text="ServiceName" VerticalAlignment="Top" Width="200" x:Name="tbxServiceName" FontSize="32" Style="{StaticResource TextBox}"/>
     </Grid>
 </Window>
