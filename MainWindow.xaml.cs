@@ -48,7 +48,14 @@ namespace PasswordNoteBook
         {
             InitializeComponent();
             //forces wait and runs in order
-            Task.WaitAll(new Task[] { Task.Run(async () => await dbManager.CreateDB()) });
+            try
+            {
+                Task.WaitAll(new Task[] { Task.Run(async () => await dbManager.CreateDB()) });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Making Database");
+            }
             OpenLock();
             //dbManager.CreateTables();
         }
