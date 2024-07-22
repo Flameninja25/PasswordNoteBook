@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PasswordNoteBook"
         mc:Ignorable="d"
-        ResizeMode="NoResize" Title="PassWord NoteBook" Height="670" Width="520"
-        WindowStyle="None">
+        ResizeMode="NoResize" Title="PassWord NoteBook" Height="670" Width="520">
     <Grid Height="630" Width="500" x:Name="RootGrid">
 
         <Grid.Background>
