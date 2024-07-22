@@ -362,9 +362,15 @@ namespace PasswordNoteBook
             //wait for the task to complete
             Task.WaitAll(new Task[] { Task.Run(async () => db = await dbManager.GetTableData()) });
 
-            //set the data grid to the data in the new datatable
-            MyDataSet.ItemsSource = db.DefaultView;
+            if (db.Rows.Count <= 0)
+            {
 
+            }
+            else
+            {
+                //set the data grid to the data in the new datatable
+                MyDataSet.ItemsSource = db.DefaultView;
+            }
             SFXManager.WriteInfo();
         }
 
