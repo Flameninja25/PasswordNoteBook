@@ -362,6 +362,7 @@ namespace PasswordNoteBook
             //wait for the task to complete
             Task.WaitAll(new Task[] { Task.Run(async () => db = await dbManager.GetTableData()) });
 
+            //check that there isn't 0 rows
             if (db.Rows.Count <= 0)
             {
 
